@@ -4,7 +4,6 @@ const cors = require("cors")
 const { sequelize } = require("./models")
 
 dotenv.config()
-
 const app = express()
 const PORT = process.env.PORT || 5577
 

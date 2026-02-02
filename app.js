@@ -21,3 +21,6 @@ sequelize
         })
     })
     .catch((err) => console.error("DB error: ", err))
+
+const userRoutes = require("./routes/user.route")
+app.use("/api", userRoutes)

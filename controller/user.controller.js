@@ -44,3 +44,63 @@ exports.createUser = async (req, res) => {
         })
     }
 }
+
+exports.getUsers = async (req, res) => {
+    try {
+        const users = await User.findAll({
+            include: [
+                { model: EduSchema, as: 'eduSchemes' },
+                { model: Customer, as: 'customer' }
+            ]
+        })
+        res.status(200).json(users)
+    } catch (error) {
+        res.status(500).json({ message: `Server error: ${error.message}` })
+    }
+}
+
+exports.getUserById = async (req, res) => {
+    try {
+        const user = await User.findByPk(req.params.id, {
+            include: [
+                { model: EduSchema, as: 'eduSchemes' },
+                { model: Customer, as: 'customer' }
+            ]
+        })
+        if (!user) return res.status(404).json({ message: "User not found" })
+        res.status(200).json(user)
+    } catch (error) {
+        res.status(500).json({ message: `Server error: ${error.message}` })
+    }
+}
+
+exports.updateUser = async (req, res) => {
+    try {
+        const user = await User.findByPk(req.params.id)
+        if (!user) return res.status(404).json({ message: "User not found" })
+        const { error } = validateUser(req.body)
+        if (error) {
+            return res.status(400).json({
+                success: false,
+                message: "Validatsiya xatosi",
+                errors: error.details.map((err) => err.message)
+            })
+        }
+        await user.update(req.body)
+        res.status(200).json({ message: "User update succesfull" })
+    } catch (error) {
+        res.status(500).json({ message: `Server error: ${error.message}` })
+    }
+}
+
+exports.deleteUser = async (req, res) => {
+    try {
+        const user = await User.findByPk(req.params.id)
+        if (!user) return res.status(404).json({ message: 'User not foun' })
+        await user.destroy()
+        res.status(200).json({ message: "User delete successfully" })
+    } catch (error) {
+        res.status(500).json({ message: `Server error: ${error.message}` })
+    }
+}
+

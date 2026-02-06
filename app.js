@@ -22,4 +22,8 @@ sequelize
     .catch((err) => console.error("DB error: ", err))
 
 const userRoutes = require("./routes/user.route")
-app.use("/api", userRoutes)
+app.use("/api/users", userRoutes)
+
+const { swaggerSpec, swaggerUi } = require("./swagger/swagger")
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec))

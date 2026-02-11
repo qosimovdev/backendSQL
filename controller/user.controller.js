@@ -49,8 +49,8 @@ exports.getUsers = async (req, res) => {
     try {
         const users = await User.findAll({
             include: [
-                { model: EduSchema, as: 'eduSchemes' },
-                { model: Customer, as: 'customer' }
+                // { model: EduSchema, as: 'eduSchemes' },
+                // { model: Customer, as: 'customer' }
             ]
         })
         res.status(200).json(users)
@@ -63,8 +63,8 @@ exports.getUserById = async (req, res) => {
     try {
         const user = await User.findByPk(req.params.id, {
             include: [
-                { model: EduSchema, as: 'eduSchemes' },
-                { model: Customer, as: 'customer' }
+                // { model: EduSchema, as: 'eduSchemes' },
+                // { model: Customer, as: 'customer' }
             ]
         })
         if (!user) return res.status(404).json({ message: "User not found" })
@@ -106,10 +106,10 @@ exports.deleteUser = async (req, res) => {
 
 exports.searchUsers = async (req, res) => {
     try {
-        const { query } = req.params
-        if (!query)
-            return res.status(400).json({ message: "Search query  is required" })
+        const { query } = req.query
 
+        if (!query)
+            return res.status(400).json({ message: "Search query is required" })
         const users = await User.findAll({
             where: {
                 [Op.or]: [

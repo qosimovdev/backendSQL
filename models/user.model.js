@@ -1,3 +1,4 @@
+const bcrypt = require("bcrypt")
 
 module.exports = (sequelize, DataTypes) => {
     const User = sequelize.define("User", {
@@ -21,8 +22,24 @@ module.exports = (sequelize, DataTypes) => {
         password: {
             type: DataTypes.STRING,
             allowNull: false
-        }
+        },
+        // cutomer_id: {
+        //     type: DataTypes.INTEGER
+        // }
 
     })
+
+    User.beforeSave(async (user, options) => {
+        if (user.changed("password")) {
+            user.password = await bcrypt.hash(user.password, 10)
+        }
+    })
+
+    // User.associate = (models) => {
+    //     User.hasMany(models.Customer, {
+    //         foreignKey: 'customer_id',
+    //         as: "customer"
+    //     })
+    // }
     return User
 }

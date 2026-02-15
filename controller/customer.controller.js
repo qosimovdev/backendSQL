@@ -1,9 +1,11 @@
-const { Op } = require("sequelize")
+const { Op, where } = require("sequelize")
 const { Customer } = require("../models")
 
 exports.createCustomer = async (req, res) => {
     try {
-        const existedEmail = await Customer.findByPk(req.body.email)
+        const existedEmail = await Customer.findOne({
+            where: { email: req.body.email }
+        })
         if (existedEmail) return res.status(400).json({ success: false, message: "Existed email" })
 
         const customer = await Customer.create(req.body)

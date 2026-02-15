@@ -148,7 +148,7 @@ router.get("/:id", userController.updateUser)
  *    responses: 
  *      200:
  *        description: User deleted successfully
- *      400:
+ *      404:
  *        description: User not found
  *      500: 
  *        description: Server error

@@ -48,10 +48,9 @@ exports.createUser = async (req, res) => {
 exports.getUsers = async (req, res) => {
     try {
         const users = await User.findAll({
-            include: [
-                // { model: EduSchema, as: 'eduSchemes' },
-                // { model: Customer, as: 'customer' }
-            ]
+            // include: [
+            //     { model: Customer, as: 'customer' }
+            // ]
         })
         res.status(200).json(users)
     } catch (error) {
@@ -63,8 +62,7 @@ exports.getUserById = async (req, res) => {
     try {
         const user = await User.findByPk(req.params.id, {
             include: [
-                // { model: EduSchema, as: 'eduSchemes' },
-                // { model: Customer, as: 'customer' }
+                { model: Customer, as: 'customer' }
             ]
         })
         if (!user) return res.status(404).json({ message: "User not found" })

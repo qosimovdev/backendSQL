@@ -20,7 +20,16 @@ module.exports = (sequelize, DataTypes) => {
         address: {
             type: DataTypes.STRING,
             allowNull: false
+        },
+        user_id: {
+            type: DataTypes.INTEGER,
+            allowNull: false
         }
     })
+    Customer.associate = (models) => {
+        Customer.belongsTo(models.User, {
+            foreignKey: "user_id"
+        })
+    }
     return Customer
 }

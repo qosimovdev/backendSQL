@@ -1,5 +1,7 @@
 const { Op } = require("sequelize")
 const { User } = require("../models")
+const { Customer } = require("../models")
+const { Car } = require("../models")
 const { validateUser } = require("../validation/userValidation")
 
 exports.createUser = async (req, res) => {
@@ -48,9 +50,11 @@ exports.createUser = async (req, res) => {
 exports.getUsers = async (req, res) => {
     try {
         const users = await User.findAll({
-            // include: [
-            //     { model: Customer, as: 'customer' }
-            // ]
+            include: [
+                { model: Customer, as: "customer" },
+                { model: Car, as: "car" }
+            ]
+
         })
         res.status(200).json(users)
     } catch (error) {

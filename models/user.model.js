@@ -23,9 +23,12 @@ module.exports = (sequelize, DataTypes) => {
             type: DataTypes.STRING,
             allowNull: false
         },
-        // cutomer_id: {
-        //     type: DataTypes.INTEGER
-        // }
+        customer_id: {
+            type: DataTypes.INTEGER
+        },
+        car_id: {
+            type: DataTypes.INTEGER
+        }
 
     })
 
@@ -35,10 +38,15 @@ module.exports = (sequelize, DataTypes) => {
         }
     })
 
-    User.associate = (models) => {
-        User.hasMany(models.Customer, {
-            foreignKey: 'user_id',
+    User.associate = models => {
+        User.belongsTo(models.Customer, {
+            foreignKey: 'customer_id',
             as: "customer"
+        })
+
+        User.belongsTo(models.Car, {
+            foreignKey: 'car_id',
+            as: 'car'
         })
     }
     return User

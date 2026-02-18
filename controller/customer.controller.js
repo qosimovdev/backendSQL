@@ -29,7 +29,14 @@ exports.getCustomers = async (req, res) => {
 
 exports.getCustomer = async (req, res) => {
     try {
-        const customer = await Customer.findByPk(req.params.id)
+        const customer = await Customer.findByPk(req.params.id, {
+            include: [
+                {
+                    model: Customer,
+                    as: "user_customer"
+                }
+            ]
+        })
         if (!customer) return res.status(404).json({ success: false, message: "Customer topilmadi" })
         res.status(200).json({ success: true, message: "Olindi", customer })
     } catch (error) {

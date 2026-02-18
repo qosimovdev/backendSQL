@@ -26,6 +26,10 @@ const userController = require("../controller/user.controller")
  *                 type: string
  *               password:
  *                 type: string
+ *               customer_id:
+ *                 type: number
+ *               car_id:
+ *                 type: number
  *    responses: 
  *      201:
  *        description: User created successfully

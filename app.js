@@ -23,8 +23,10 @@ sequelize
 
 const userRoutes = require("./routes/user.route")
 const customerRoutes = require("./routes/customer.route")
+const carRoutes = require("./routes/car.route")
 app.use("/api/users", userRoutes)
 app.use("/api/customer", customerRoutes)
+app.use("/api/car", carRoutes)
 
 const { swaggerSpec, swaggerUi } = require("./swagger/swagger")
 

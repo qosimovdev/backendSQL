@@ -20,15 +20,12 @@ module.exports = (sequelize, DataTypes) => {
         address: {
             type: DataTypes.STRING,
             allowNull: false
-        },
-        user_id: {
-            type: DataTypes.INTEGER,
-            allowNull: false
         }
     })
-    Customer.associate = (models) => {
-        Customer.belongsTo(models.User, {
-            foreignKey: "user_id"
+    Customer.associate = models => {
+        Customer.hasMany(models.Customer, {
+            foreignKey: "customer_id",
+            as: "user_customer"
         })
     }
     return Customer
